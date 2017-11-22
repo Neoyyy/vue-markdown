@@ -3,6 +3,9 @@ import Router from 'vue-router'
 import Main from '@/components/Main'
 import Login from '@/components/Login'
 
+import UserBar from '@/components/frame/UserBar'
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -17,6 +20,11 @@ export default new Router({
         path: '/login',
     	name: 'login',
     	component: Login	
+    },
+    {
+        path: '/bar',
+        name: 'bar',
+        component: UserBar
     }
   ]
 })
