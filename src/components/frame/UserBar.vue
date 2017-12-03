@@ -1,23 +1,36 @@
 <template>
 <div class=" SideBar">
-<div class="row">
-  <div class="col-md-1">
-    <div class="LogoBox">
+
+
+<div class="row" style="background: 	#F8F8FF">
+  <div class="col-md-1" style="background: 	#FF00FF">
+    <div class="LogoBox" style="background: #FFF0F5">
       <img src="http://cv.ftqq.com/static/media/global-warming.0d3bcb11.svg" class="Logo" alt="logo">
     </div>
   </div>
+
 </div>
-<div class="row">
-  <div class="col-md-1">qq</div>
+
+<div class="row" style="background:	#FFD700">
+  <div class="col-md-1">nick name</div>
 </div>
-<div class="row">
-  <div class="col-md-1">22</div>
+
+
+<div class="row" style="background:#7FFFAA">
+  <div class="col-md-1">用户文件</div>
 </div>
-<div class="row">
-  <div class="col-md-1">11</div>
+
+<div class="row" style="background: 	#FFFF00">
+  <div class="col-md-1">同IP文件</div>
 </div>
- </div>
+
+
+<div class="row" style="background: 	#CD853F">
+  <div class="col-md-1">注销</div>
 </div>
+
+</div>
+
 </template>
 
 <script>
