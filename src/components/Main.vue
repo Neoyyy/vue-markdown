@@ -9,9 +9,41 @@
         </div>
       <div>
       <ul class="nav navbar-nav">
-        <li><a href="#">操作提示</a></li>
-          <li><a href="#">预览 <span class="glyphicon glyphicon-search"/></a></li>
-            <li class="dropdown">
+
+
+        <li><a href="#" title="一些技巧"
+               data-container="body" data-toggle="popover" data-placement="bottom"
+               v-bind:data-content="tips">操作提示</a></li>
+
+
+          <li><a href="#" data-toggle="modal" data-target="#myModal">预览
+            <span class="glyphicon glyphicon-search"/></a></li>
+
+
+
+        <!-- previewdialog -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">文章预览</h4>
+              </div>
+              <div class="modal-body">
+                <PreviewDialog></PreviewDialog>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     导出为
                   <b class="caret"></b>
@@ -75,26 +107,37 @@
 </div>
 
 </div>
+
+
+
+
+
+
 </template>
 
 <script scoped>
 import UserBar from './frame/UserBar'
 import EditArea from './frame/EditArea'
+import PreviewDialog from './frame/PreViewDialog'
 
 export default {
   name: 'main',
   data () {
     return {
-      msg: 'Main Page'
+      msg : 'Main Page',
+      tips : '一些操作提示....'
     }
   },
   components:{
     UserBar,
-    EditArea
+    EditArea,
+    PreviewDialog
   }
 }
 
-
+$(function (){
+  $("[data-toggle='popover']").popover();
+});
 
 
 
