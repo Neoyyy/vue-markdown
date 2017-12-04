@@ -10,16 +10,17 @@
       <div>
       <ul class="nav navbar-nav">
         <li><a href="#">操作提示</a></li>
-          <li><a href="#">预览</a></li>
+          <li><a href="#">预览 <span class="glyphicon glyphicon-search"/></a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     导出为
                   <b class="caret"></b>
+
               </a>
               <ul class="dropdown-menu">
-                <li><a href="#">Markdown</a></li>
-                <li><a href="#">PDF</a></li>
-                <li><a href="#">HTML</a></li>
+                <li><a href="#">Markdown <span class="glyphicon glyphicon-download-alt"/></a></li>
+                <li><a href="#">PDF <span class="glyphicon glyphicon-download-alt"/></a></li>
+                <li><a href="#">HTML <span class="glyphicon glyphicon-download-alt"/></a></li>
               </ul>
             </li>
             <li class="dropdown">

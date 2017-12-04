@@ -7,7 +7,7 @@ const state = {
     nickname:''
 
   },
-  userarticle:[],
+  userarticle:[{name:'aaa'},{name:'eee'},{name:'ffff'}],
   iparticle:[],
   editarticle:{
     articleid:'',

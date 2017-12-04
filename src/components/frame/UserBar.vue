@@ -1,33 +1,27 @@
 <template>
-<div class=" SideBar">
+<div class=" SideBar col-md-2">
 
 
-<div class="row" style="background: 	#F8F8FF">
-  <div class="col-md-1" style="background: 	#FF00FF">
-    <div class="LogoBox" style="background: #FFF0F5">
-      <img src="http://cv.ftqq.com/static/media/global-warming.0d3bcb11.svg" class="Logo" alt="logo">
+<div class="row" >
+
+    <div class="LogoBox" >
+      <img src="../../../static/img/head.jpg" class="Logo" alt="logo" height="150" width="150">
     </div>
+
+
+</div>
+
+
+  <div class="list-group">
+
+    <a href="#" class="list-group-item">nick name</a>
+    <a href="#" class="list-group-item"><span class="glyphicon glyphicon-folder-open"/>   用户文件 </a>
+    <a href="#" class="list-group-item"><span class="glyphicon glyphicon-folder-open"/>   同IP文件 </a>
+    <a href="#" class="list-group-item"><span class="glyphicon glyphicon-off"/>   注销 </a>
   </div>
 
-</div>
-
-<div class="row" style="background:	#FFD700">
-  <div class="col-md-1">nick name</div>
-</div>
 
 
-<div class="row" style="background:#7FFFAA">
-  <div class="col-md-1">用户文件</div>
-</div>
-
-<div class="row" style="background: 	#FFFF00">
-  <div class="col-md-1">同IP文件</div>
-</div>
-
-
-<div class="row" style="background: 	#CD853F">
-  <div class="col-md-1">注销</div>
-</div>
 
 </div>
 
@@ -52,7 +46,7 @@ export default {
     margin-bottom: 20px;
 }
 .SideBar {
-    background-color: #363636;
+
     max-width: 100px;
     min-width: 100px;
     padding: 0;
