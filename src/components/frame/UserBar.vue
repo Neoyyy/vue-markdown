@@ -62,8 +62,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content ">
 
-        <div class="modal-body ">
-          <div class="jumbotron">
+        <div class="modal-body " >
+          <div class="jumbotron"style="background: #FFFFFF">
 
               <h1>真..真的要退出登陆？？？</h1>
             </div>

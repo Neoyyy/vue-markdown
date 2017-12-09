@@ -132,6 +132,9 @@ export default {
     UserBar,
     EditArea,
     PreviewDialog
+  },
+  methods:{
+
   }
 }
 
