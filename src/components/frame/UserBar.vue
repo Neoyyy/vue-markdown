@@ -31,9 +31,11 @@
 
   <div class="list-group">
 
-    <a href="#" class="list-group-item">nick name</a>
-    <a href="#" class="list-group-item" data-toggle="modal" data-target="#userFile"><span class="glyphicon glyphicon-folder-open"/>   云端文件 </a>
-    <a href="#" class="list-group-item" data-toggle="modal" data-target="#loginout"><span class="glyphicon glyphicon-off"/>   注销 </a>
+    <a href="#" class="list-group-item" >nick name</a>
+    <a href="#" class="list-group-item" data-toggle="modal" data-target="#userFile">
+      <span class="glyphicon glyphicon-folder-open"/>   云端文件 </a>
+    <a href="#" class="list-group-item" data-toggle="modal" data-target="#loginout">
+      <span class="glyphicon glyphicon-off"/>   注销 </a>
   </div>
 
   <!-- FileModal -->
@@ -109,6 +111,8 @@ export default {
   components:{
     Userfiles,
     Login
+  },methods:{
+
   }
 }
 

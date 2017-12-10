@@ -5,7 +5,6 @@ import Login from '@/components/Login'
 
 import UserBar from '@/components/frame/UserBar'
 import Userfile from '@/components/frame/UserFile'
-import dialog from '@/components/frame/dialog'
 
 Vue.use(Router)
 
@@ -31,11 +30,6 @@ export default new Router({
       path: '/files',
       name: 'files',
       component: Userfile
-    },
-    {
-      path: '/dialog',
-      name: 'dialog',
-      component: dialog
     }
   ]
 })
