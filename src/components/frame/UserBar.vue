@@ -32,6 +32,8 @@
   <div class="list-group">
 
     <a href="#" class="list-group-item" >nick name</a>
+    <a href="#" class="list-group-item" data-toggle="modal" data-target="#FriendList">
+      <span class="glyphicon glyphicon-user"/>   好友 </a>
     <a href="#" class="list-group-item" data-toggle="modal" data-target="#userFile">
       <span class="glyphicon glyphicon-folder-open"/>   云端文件 </a>
     <a href="#" class="list-group-item" data-toggle="modal" data-target="#loginout">
@@ -93,6 +95,7 @@
 <script>
 import Userfiles from './UserFile'
 import Login from '../Login'
+import FriendList from './FriendList'
 
 $(function () { $('.popover-show').popover('show');});
 $(function () { $('.popover-hide').popover('hide');});
@@ -110,7 +113,8 @@ export default {
   },
   components:{
     Userfiles,
-    Login
+    Login,
+    FriendList
   },methods:{
 
   }

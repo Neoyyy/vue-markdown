@@ -43,6 +43,7 @@
 </template>
 
 <script>
+
   import marked from '../../util/markdownUtil'
   export default {
     name: 'editarea',
@@ -61,6 +62,10 @@
         console.log(convettext);
         $("#iframewrapper").html(convettext);
 
+console.log(layer)
+
+
+layer.msg('ssss')
       }
     }
   }

@@ -5,15 +5,14 @@ import App from './App'
 import router from './router'
 import store from './vuex/index'
 import Vuex from 'vuex'
-import $ from 'jquery'
 import VueResource from 'vue-resource'
 import './assets/css/bootstrap.min.css'
 import './assets/js/bootstrap.min'
 import element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
-Vue.config.productionTip = false
 
+Vue.config.productionTip = false
 
 
 Vue.use(Vuex)
@@ -64,3 +63,4 @@ Vue.http.interceptors.push(function(request, next) {
   })
 
 })
+
