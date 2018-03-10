@@ -1,7 +1,7 @@
 <template>
 
   <el-container>
-    <el-header>
+    <el-header style="padding: 0px">
       <nav class="navbar navbar-inverse" role="navigation">
         <div class="container-fluid">
           <div class="navbar-header">

@@ -9,5 +9,10 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
     <script src="./static/layui/layui.js"></script>
+    <script src="static/socket/socket.io.js"></script>
+    <script>
+      var socket = io('http://localhost:3000');
+      socket.emit('my other event', { my: 'data' });
+    </script>
   </body>
 </html>
