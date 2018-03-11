@@ -11,7 +11,6 @@ import './assets/js/bootstrap.min'
 import element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
-
 Vue.config.productionTip = false
 
 
@@ -27,6 +26,25 @@ new Vue({
   render: h => h(App),
   components: { App }
 })
+
+
+var socket = io("http://localhost:3000");
+Vue.prototype.$socket = socket;
+
+
+layui.use('layim', function(layim){
+  //先来个客服模式压压精
+  layim.config({
+    brief: false //是否简约模式（如果true则不显示主面板）
+  }).chat({
+    name: '略略略'
+    ,type: 'friend'
+    ,avatar: 'http://tp1.sinaimg.cn/5619439268/180/40030060651/1'
+    ,id: -2
+  });
+
+  Vue.prototype.$layim = layim;
+});
 
 
 //全局配置vue-resource的请求拦截与响应处理

@@ -5,10 +5,11 @@
 </template>
 
 <script>
-  import socketim from 'socketim/sockim'
-export default {
+
+
+  export default {
   name: 'app'
-}
+  }
 
 </script>
 <style>

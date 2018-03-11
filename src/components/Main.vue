@@ -112,6 +112,8 @@ import UserBar from './frame/UserBar'
 import EditArea from './frame/EditArea'
 import PreviewDialog from './frame/PreViewDialog'
 import tipsMsg from '../../static/tips'
+import imui from '../socketim/imui'
+import messagesocket from '../socketim/messagesocket'
 
 export default {
   name: 'main',
