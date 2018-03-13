@@ -83,7 +83,7 @@
         <UserBar></UserBar>
 
       </el-aside>
-      <el-main>
+      <el-main style="height: 80%;">
 
           <EditArea></EditArea>
 
@@ -114,6 +114,7 @@ import PreviewDialog from './frame/PreViewDialog'
 import tipsMsg from '../../static/tips'
 import imui from '../socketim/imui'
 import messagesocket from '../socketim/messagesocket'
+import Vue from 'vue'
 
 export default {
   name: 'main',
@@ -122,6 +123,42 @@ export default {
       msg : 'Main Page',
       tips : tipsMsg
     }
+  },
+  //挂载时开启socket
+  mounted:function () {
+    Vue.prototype.$socket = io("http://localhost:3000");
+
+    this.$socket.on('chat',function (data) {
+      var dataObject = JSON.parse(data);
+      //this.$logHelper.info("new message:"+data);
+
+    });
+
+    this.$socket.on('disconnect',function () {
+      //this.$logHelper.info("disconnect from server");
+
+    });
+
+    //开启好友
+    layui.use('layim', function(layim){
+      Vue.prototype.$layim = layim;
+      //先来个客服模式压压精
+      layim.config({
+        init:{},
+        brief: false, //是否简约模式（如果true则不显示主面板）
+        title:'我的好友',
+        isgroup:'false'
+      })
+
+    });
+
+    layui.use('layer',function (layer) {
+      Vue.prototype.$layer = layer;
+    })
+
+
+
+
   },
   components:{
     UserBar,
@@ -175,11 +212,11 @@ document.getElementById("textareaCode").style.height=height+"px";
 //$("iframeResult").height(height+"px");
 }
 window.onload=function(){
-autodivheight();
+//autodivheight();
 }
 window.onresize = function(){
 
-  autodivheight();
+  //autodivheight();
 }
 </script>
 
