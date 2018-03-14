@@ -15,12 +15,6 @@
                      data-container="body" data-toggle="popover" data-placement="bottom"
                      v-bind:data-content="tips">操作提示</a></li>
 
-
-              <li><a href="#" data-toggle="modal" data-target="#myModal">预览
-                <span class="glyphicon glyphicon-search"/></a></li>
-
-
-
               <!-- previewdialog -->
               <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
@@ -51,9 +45,9 @@
 
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a id="markdown" href="#" v-on:click="exportTo">Markdown <span class="glyphicon glyphicon-download-alt"/></a></li>
-                  <li><a id="pdf" href="#" v-on:click="exportTo">PDF <span class="glyphicon glyphicon-download-alt"/></a></li>
-                  <li><a id="html" href="#" v-on:click="exportTo">HTML <span class="glyphicon glyphicon-download-alt"/></a></li>
+                  <li><a id="convertToMarkdown" href="#" v-on:click="exportTo">Markdown <span class="glyphicon glyphicon-download-alt"/></a></li>
+                  <li><a id="convertToPdf" href="#" v-on:click="exportTo">PDF <span class="glyphicon glyphicon-download-alt"/></a></li>
+                  <li><a id="convertToHtml" href="#" v-on:click="exportTo">HTML <span class="glyphicon glyphicon-download-alt"/></a></li>
                 </ul>
               </li>
               <li class="dropdown">
@@ -63,16 +57,16 @@
                 </a>
               </li>
 
-              <li><a href="#">快捷1</a></li>
-              <li><a href="#">快捷2</a></li>
-              <li><a href="#">快捷3</a></li>
-              <li><a href="#">快捷4</a></li>
+              <li><a id="addBold" class="glyphicon glyphicon-bold" v-on:click="addContent"></a></li>
+              <li><a id="addItalic" class="glyphicon glyphicon-italic" v-on:click="addContent"></a></li>
+              <li><a id="addLists" class="glyphicon glyphicon-list" v-on:click="addContent"></a></li>
+              <li><a id="addCode" class="glyphicon glyphicon-console" v-on:click="addContent"></a></li>
+              <li><a id="addLinks" class="glyphicon glyphicon-link" v-on:click="addContent"></a></li>
+              <li><a id="searchArticle" class="glyphicon glyphicon-search" v-on:click="searchArticle"></a></li>
             </ul>
           </div>
 
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#" v-on:click="shou">获取文件</a>
-          </div>
+
         </div>
 
       </nav>
@@ -168,7 +162,41 @@ export default {
   methods:{
     exportTo:function (event) {
       console.log("触发的是:"+event.target.id);
+      switch (event.target.id)
+      {
+        case 'convertToMarkdown':
+          break;
+        case 'convertToPdf':
+          break;
+        case 'convertToHtml':
+          break;
+        default:
+      }
 
+    },
+    addContent:function (event) {
+      var content;
+      switch (event.target.id)
+      {
+        case 'addBold':
+          content = "";
+          break;
+        case 'addItalic':
+          content = "";
+          break;
+        case 'addLists':
+          content = "";
+          break;
+        case 'addCode':
+          content = "";
+          break;
+        case 'addLinks':
+          content = "";
+          break;
+        default:
+      }
+
+      $("#").insertContent(content);
     },
     shou:function () {
       this.$alert('这是一段内容', '标题名称', {
@@ -218,6 +246,57 @@ window.onresize = function(){
 
   //autodivheight();
 }
+
+$(function() {
+//在光标处插入
+  (function($) {
+    $.fn
+      .extend({
+        insertContent : function(myValue, t) {
+          var $t = $(this)[0];
+          if (document.selection) { // ie
+            this.focus();
+            var sel = document.selection.createRange();
+            sel.text = myValue;
+            this.focus();
+            sel.moveStart('character', -l);
+            var wee = sel.text.length;
+            if (arguments.length == 2) {
+              var l = $t.value.length;
+              sel.moveEnd("character", wee + t);
+              t <= 0 ? sel.moveStart("character", wee - 2 * t
+                - myValue.length) : sel.moveStart(
+                "character", wee - t - myValue.length);
+              sel.select();
+            }
+          } else if ($t.selectionStart
+            || $t.selectionStart == '0') {
+            var startPos = $t.selectionStart;
+            var endPos = $t.selectionEnd;
+            var scrollTop = $t.scrollTop;
+            $t.value = $t.value.substring(0, startPos)
+              + myValue
+              + $t.value.substring(endPos,
+                $t.value.length);
+            this.focus();
+            $t.selectionStart = startPos + myValue.length;
+            $t.selectionEnd = startPos + myValue.length;
+            $t.scrollTop = scrollTop;
+            if (arguments.length == 2) {
+              $t.setSelectionRange(startPos - t,
+                $t.selectionEnd + t);
+              this.focus();
+            }
+          } else {
+            this.value += myValue;
+            this.focus();
+          }
+        }
+      })
+  })(jQuery);
+
+})
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
