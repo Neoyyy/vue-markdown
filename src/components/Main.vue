@@ -25,7 +25,7 @@
                       <h4 class="modal-title" id="myModalLabel">文章预览</h4>
                     </div>
                     <div class="modal-body">
-                      <PreviewDialog></PreviewDialog>
+                      <!--<PreviewDialog></PreviewDialog>-->
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -51,11 +51,38 @@
                 </ul>
               </li>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <a class="dropdown-toggle" data-toggle="modal" data-target="#uploadModal">
                   上传文件进行解析
                   <b class="caret"></b>
                 </a>
               </li>
+
+              <!-- uploadModal -->
+              <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="loginoutModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content ">
+
+                    <div class="modal-body " >
+                      <div class="jumbotron"style="background: #FFFFFF">
+
+                        <fieldset id="uploadFileArea" class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                          <legend>拖拽上传</legend> </fieldset>
+                        <div class="layui-upload-drag" id="test10">
+                        <i class="layui-icon"></i>
+                          <p>点击上传，或将文件拖拽到此处</p>
+                      </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+
 
               <li><a id="addBold" class="glyphicon glyphicon-bold" v-on:click="addContent"></a></li>
               <li><a id="addItalic" class="glyphicon glyphicon-italic" v-on:click="addContent"></a></li>
@@ -79,7 +106,7 @@
       </el-aside>
       <el-main style="height: 80%;">
 
-          <EditArea></EditArea>
+          <EditArea ref="EditArea"></EditArea>
 
 
       </el-main>
@@ -149,7 +176,26 @@ export default {
     layui.use('layer',function (layer) {
       Vue.prototype.$layer = layer;
     })
+    layui.use('upload', function(){
+      var upload = layui.upload;
 
+      //普通图片上传
+      var uploadInst = upload.render({
+        //拖拽上传
+        elem: '#test10'
+        ,url: ''
+        ,auto: false
+        ,done: function(res){
+          console.log(res)
+        }
+      });
+    })
+
+
+    $("#uploadFileArea").onchange = function () {
+        console.log("new file");
+        //todo 解析文件
+    }
 
 
 
@@ -160,6 +206,22 @@ export default {
     PreviewDialog
   },
   methods:{
+    upload:function () {
+      console.log("1111")
+      this.$layer.open({
+        type: 1
+        ,offset: 'auto'
+        ,id: 'uploadFile'
+        ,content: '<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;"> <legend>拖拽上传</legend> </fieldset> <div class="layui-upload-drag" id="test10"> <i class="layui-icon"></i> <p>点击上传，或将文件拖拽到此处</p></div>'
+        ,btn: '关闭全部'
+        ,btnAlign: 'c'
+        ,shade: 0
+        ,yes: function(){
+          this.$layer.closeAll();
+        }
+      });
+
+    },
     exportTo:function (event) {
       console.log("触发的是:"+event.target.id);
       switch (event.target.id)
@@ -179,35 +241,46 @@ export default {
       switch (event.target.id)
       {
         case 'addBold':
-          content = "";
+          content = "  \r**粗体文本**";
           break;
         case 'addItalic':
-          content = "";
+          content = "  \n*斜体文本*";
           break;
         case 'addLists':
-          content = "";
+          content = "  \n - 列表文本";
           break;
         case 'addCode':
-          content = "";
+          content = "  \n ```\ncode\n```";
           break;
         case 'addLinks':
-          content = "";
+          content = "  \n [link text](url)";
           break;
         default:
       }
-
-      $("#").insertContent(content);
+      $("#textareaCode").text($("#textareaCode").text() + content);
+      this.$refs.EditArea.convertToHtml();
     },
-    shou:function () {
-      this.$alert('这是一段内容', '标题名称', {
-        confirmButtonText: '确定',
-        callback: action => {
-          this.$message({
-            type: 'info',
-            message: `action: ${ action }`
-          });
+    searchArticle:function () {
+      this.$layer.open({
+        type: 2
+        ,title: '搜索文件'
+        ,area: ['500px', '250px']
+        ,shade: 0
+        ,maxmin: true
+        ,content: '啊啊啊'
+        ,btn: ['搜索', '关闭']
+        ,yes: function(){
+          //todo
         }
-      });    }
+        ,btn2: function(){
+          this.$layer.closeAll();
+        }
+        ,zIndex: this.$layer.zIndex //重点1
+        ,success: function(layero){
+          this.$layer.setTop(layero); //重点2
+        }
+      })
+    }
   }
 }
 
@@ -217,85 +290,6 @@ $(function (){
 
 
 
-var x = 0;
-function autodivheight(){
-    var winHeight=0;
-    if (window.innerHeight) {
-        winHeight = window.innerHeight;
-    } else if ((document.body) && (document.body.clientHeight)) {
-        winHeight = document.body.clientHeight;
-    }
-    //通过深入Document内部对body进行检测，获取浏览器窗口高度
-    if (document.documentElement && document.documentElement.clientHeight) {
-        winHeight = document.documentElement.clientHeight;
-    }
-    var height = winHeight*0.68
-    //editor.setSize('100%', height);
-    //document.getElementById("iframewrapper").style.height= height +"px";
-console.log("winHeight:"+height);
-document.getElementById("iframewrapper").style.height=height+"px";
-
-document.getElementById("textareaCode").style.height=height+"px";
-
-//$("iframeResult").height(height+"px");
-}
-window.onload=function(){
-//autodivheight();
-}
-window.onresize = function(){
-
-  //autodivheight();
-}
-
-$(function() {
-//在光标处插入
-  (function($) {
-    $.fn
-      .extend({
-        insertContent : function(myValue, t) {
-          var $t = $(this)[0];
-          if (document.selection) { // ie
-            this.focus();
-            var sel = document.selection.createRange();
-            sel.text = myValue;
-            this.focus();
-            sel.moveStart('character', -l);
-            var wee = sel.text.length;
-            if (arguments.length == 2) {
-              var l = $t.value.length;
-              sel.moveEnd("character", wee + t);
-              t <= 0 ? sel.moveStart("character", wee - 2 * t
-                - myValue.length) : sel.moveStart(
-                "character", wee - t - myValue.length);
-              sel.select();
-            }
-          } else if ($t.selectionStart
-            || $t.selectionStart == '0') {
-            var startPos = $t.selectionStart;
-            var endPos = $t.selectionEnd;
-            var scrollTop = $t.scrollTop;
-            $t.value = $t.value.substring(0, startPos)
-              + myValue
-              + $t.value.substring(endPos,
-                $t.value.length);
-            this.focus();
-            $t.selectionStart = startPos + myValue.length;
-            $t.selectionEnd = startPos + myValue.length;
-            $t.scrollTop = scrollTop;
-            if (arguments.length == 2) {
-              $t.setSelectionRange(startPos - t,
-                $t.selectionEnd + t);
-              this.focus();
-            }
-          } else {
-            this.value += myValue;
-            this.focus();
-          }
-        }
-      })
-  })(jQuery);
-
-})
 
 </script>
 
