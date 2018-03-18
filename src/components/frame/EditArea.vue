@@ -22,8 +22,9 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="row">
-            <div class="col-xs-12 ">
-              <p  class="text-left">预览</p>
+            <div class="col-xs-12 text-right">
+              <button type="button" class="btn btn-success" v-on:click="saveArticle">
+                <span class="glyphicon glyphicon-sort"></span> 保存</button>
             </div>
           </div>
 
@@ -54,7 +55,6 @@
     },
     methods:{
       convertToHtml:function () {
-
         var text = $("#textareaCode").val();
         console.log(text);
         var convettext = marked.convert(text);
@@ -76,6 +76,35 @@
           area : [width, height],
           content: marked.convert($("#textareaCode").val())
         });
+      },
+      saveArticle:function () {
+        if ("online" == this.$store.state.mine.status){
+
+
+        }else{
+          this.$layer.open({
+            type: 0
+            ,title: '保存文章'
+            ,area: 'auto'
+            ,shade: 0
+            ,maxmin: true
+            ,offset: 'auto'
+            ,content: '您未登录，是否以IP为记录进行保存？'
+            ,btn: ['保存为IP文件', '去登陆'] //只是为了演示
+            ,yes: function(){
+              //$(that).click();
+              editArticleAuth()
+            }
+            ,btn2: function(){
+              this.$layer.closeAll();
+            }
+
+            ,zIndex: this.$layer.zIndex //重点1
+
+          });
+        }
+
+
       }
 
     }

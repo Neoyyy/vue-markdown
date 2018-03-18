@@ -31,7 +31,7 @@
 
   <div class="list-group">
 
-    <a href="#" class="list-group-item" >nick name</a>
+    <a href="#" class="list-group-item" >{{ getNickName }}</a>
     <a href="#" class="list-group-item" data-toggle="modal" data-target="#FriendList">
       <span class="glyphicon glyphicon-user"/>   好友 </a>
     <a href="#" class="list-group-item" data-toggle="modal" data-target="#userFile">
@@ -115,9 +115,16 @@ export default {
     Userfiles,
     Login,
     FriendList
-  },methods:{
+  },
+  methods:{
 
+  },
+  computed:{
+    getNickName(){
+      return this.$store.state.mine.username
+    }
   }
+
 }
 
 

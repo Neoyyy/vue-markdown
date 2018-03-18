@@ -165,7 +165,9 @@ export default {
       Vue.prototype.$layim = layim;
       //先来个客服模式压压精
       layim.config({
-        init:{},
+        init:{
+          mine:this.getIMMine
+        },
         brief: false, //是否简约模式（如果true则不显示主面板）
         title:'我的好友',
         isgroup:'false'
@@ -205,6 +207,23 @@ export default {
     EditArea,
     PreviewDialog
   },
+  computed:{
+    getIMMine:{
+      get(){
+        return this.$store.state.mine
+      }
+    },
+    getIMFriend:{
+      get(){
+        return this.$store.state.friend
+      }
+    },
+    getIMGroup:{
+      get(){
+        return this.$store.state.group
+      }
+    }
+  },
   methods:{
     upload:function () {
       console.log("1111")
@@ -222,8 +241,10 @@ export default {
       });
 
     },
+
     exportTo:function (event) {
       console.log("触发的是:"+event.target.id);
+      //console.log("2"+this.getIMMine());
       switch (event.target.id)
       {
         case 'convertToMarkdown':
@@ -261,25 +282,19 @@ export default {
       this.$refs.EditArea.convertToHtml();
     },
     searchArticle:function () {
-      this.$layer.open({
-        type: 2
-        ,title: '搜索文件'
-        ,area: ['500px', '250px']
-        ,shade: 0
-        ,maxmin: true
-        ,content: '啊啊啊'
-        ,btn: ['搜索', '关闭']
-        ,yes: function(){
-          //todo
-        }
-        ,btn2: function(){
-          this.$layer.closeAll();
-        }
-        ,zIndex: this.$layer.zIndex //重点1
-        ,success: function(layero){
-          this.$layer.setTop(layero); //重点2
-        }
-      })
+      layer.prompt({
+        formType: 0,
+        //value: '初始值',
+        title: '请输入文章代码',
+        //area: ['800px', '350px'] //自定义文本域宽高
+      }, function(value, index, elem){
+        $.get("http://localhost:3000/article/getsharearticle?articleId="+value,function(data){
+            this.handlerSearchArticle(data);
+        });
+      });
+    },
+    handlerSearchArticle:function (data){
+      console.log(JSON.stringify(data))
     }
   }
 }
