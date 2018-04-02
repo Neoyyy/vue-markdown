@@ -53,24 +53,20 @@
 
     }
   },
+
   methods: {
     toggle: function () {
 
-      //alert(this.firstChoice);
-      console.log('点击了');
       if (this.firstChoice == '登录'){
         this.firstChoice = '注册';
         this.alternative = '登录';
         this.buttontag = '注册';
-        //console.log('切换了');
 
 
       }else{
         this.firstChoice = '登录';
         this.alternative = '注册';
         this.buttontag = '登录';
-
-        //console.log('切换了');
 
       }
 
@@ -80,8 +76,6 @@
     },
     submit: function () {
       var url = 'http://localhost:3000';
-      //alert(url);
-      console.log('the host :'+this.HOST);
       var data = {
         email : this.formdata.email,
         password : this.formdata.password
@@ -92,15 +86,18 @@
         url += '/login';
         console.log('the url:'+url);
       }else{
-        data.nickname = this.formdata.nickname;
+        data.username = this.formdata.nickname;
         url += '/register';
 
       }
 
 
-      $.post(url,data,function (res) {
-        alert(res.message);
-      })
+      var postData = {
+        url:url,
+        data:data
+      }
+      this.$store.dispatch('userLogin',postData);
+
 
     }
   }

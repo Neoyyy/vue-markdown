@@ -1,21 +1,26 @@
 const mutations = {
   //清空登录信息
   clearLoginInfo(state){
-    state.loginInfo = {
-      username:'',
-      password:'',
-      nickname:''
-    }
+    state.mine.status = "offline",
+    state.mine.username = "offline",
+    state.userarticle = null
+
   },
 
   //设置登录信息
   setLoginInfo(state,data){
-    state.loginInfo = data;
+    state.mine = data.mine;
+    state.friend = data.friend;
+    state.group = data.group;
   },
 
   //从服务端获取的同ip文章
   setIPArticle(state,articles){
-    state.iparticle = articles;
+    console.log("ip article:"+articles.iparticle);
+    console.log("user article:"+articles.userarticle);
+    state.iparticle = articles.iparticle;
+    state.userarticle = articles.userarticle;
+
   },
 
 
@@ -24,7 +29,11 @@ const mutations = {
     state.userarticle = articles;
   }
 
-
+  ,
+  //test
+  changeTest(state,name){
+    state.mine.username = name;
+  }
 
 
 }

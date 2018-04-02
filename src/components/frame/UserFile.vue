@@ -10,7 +10,7 @@
 
     <!-- List group -->
     <ul class="list-group">
-      <li class="list-group-item" v-for="article in getUserArticles">{{ article.name }}</li>
+      <li class="list-group-item" v-for="article in getUserArticles">{{ article.title }}</li>
 
     </ul>
 
@@ -25,7 +25,7 @@
 
     <!-- List group -->
     <ul class="list-group">
-      <li class="list-group-item" v-for="article in getIPArticles">{{ article.name }}</li>
+      <li class="list-group-item" v-for="article in getIPArticles">{{ article.title }}</li>
 
     </ul>
 

@@ -1,10 +1,7 @@
 const state = {
 
 
-  loginInfo:{
-
-  },
-  userarticle:[{name:'aaa'},{name:'eee'},{name:'ffff'}],
+  userarticle:[],
   iparticle:[],
   editarticle:{
     articleid:'',

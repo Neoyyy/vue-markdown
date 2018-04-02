@@ -66,7 +66,7 @@
                       <div class="jumbotron"style="background: #FFFFFF">
 
                         <fieldset id="uploadFileArea" class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-                          <legend>拖拽上传</legend> </fieldset>
+                          <legend>拖拽上传(请选择.md文件)</legend> </fieldset>
                         <div class="layui-upload-drag" id="test10">
                         <i class="layui-icon"></i>
                           <p>点击上传，或将文件拖拽到此处</p>
@@ -129,7 +129,8 @@
 </template>
 
 <script scoped>
-import UserBar from './frame/UserBar'
+  import marked from '../util/markdownUtil'
+  import UserBar from './frame/UserBar'
 import EditArea from './frame/EditArea'
 import PreviewDialog from './frame/PreViewDialog'
 import tipsMsg from '../../static/tips'
@@ -181,23 +182,42 @@ export default {
     layui.use('upload', function(){
       var upload = layui.upload;
 
-      //普通图片上传
+
       var uploadInst = upload.render({
         //拖拽上传
         elem: '#test10'
         ,url: ''
+        ,exts: 'md'
+        ,accept: 'file'
         ,auto: false
-        ,done: function(res){
-          console.log(res)
+        ,drag:true
+        ,choose:function (obj) {
+          obj.preview(function (index, file, result) {
+            console.log("file:"+file);
+            if(window.FileReader){
+              var reader = new FileReader();
+              reader.onloadend = function (event) {
+                if(event.target.readyState == FileReader.DONE){
+                  //console.log("内容:"+event.target.result);
+                  $("#textareaCode").text(event.target.result);
+                  $("#uploadModal").modal("hide");
+                 //todo 修改this获取vm
+                  var text = $("#textareaCode").val();
+                  var convettext = marked.convert(text);
+                  $("#articlePreviewArea").html(convettext);
+
+
+                }
+              }
+              reader.readAsText(file);
+
+            }
+          })
         }
+
       });
     })
 
-
-    $("#uploadFileArea").onchange = function () {
-        console.log("new file");
-        //todo 解析文件
-    }
 
 
 
