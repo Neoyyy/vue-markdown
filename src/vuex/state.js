@@ -5,7 +5,7 @@ const state = {
   iparticle:[],
   editarticle:{
     articleid:'',
-    title:'',
+    title:'default',
     owneremail:'',
     ownerip:'',
     content:''

@@ -83,7 +83,7 @@
 
         }else{
           this.$layer.open({
-            type: 0
+            type: 1
             ,title: '保存文章'
             ,area: 'auto'
             ,shade: 0
@@ -92,11 +92,11 @@
             ,content: '您未登录，是否以IP为记录进行保存？'
             ,btn: ['保存为IP文件', '去登陆'] //只是为了演示
             ,yes: function(){
-              //$(that).click();
+
               editArticleAuth()
             }
             ,btn2: function(){
-              this.$layer.closeAll();
+              $('#login').modal('show');
             }
 
             ,zIndex: this.$layer.zIndex //重点1

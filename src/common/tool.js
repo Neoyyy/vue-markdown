@@ -75,7 +75,12 @@ function editArticleAuth() {
     ,content: content
     ,btn: ['确定', '取消']
     ,yes: function(){
-      $(that).click();
+      var postData = {
+
+      };
+      $.post("url",postData,function (res) {
+
+      })
     }
     ,btn2: function(){
       layer.closeAll();

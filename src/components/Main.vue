@@ -45,9 +45,9 @@
 
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a id="convertToMarkdown" href="#" v-on:click="exportTo">Markdown <span class="glyphicon glyphicon-download-alt"/></a></li>
-                  <li><a id="convertToPdf" href="#" v-on:click="exportTo">PDF <span class="glyphicon glyphicon-download-alt"/></a></li>
-                  <li><a id="convertToHtml" href="#" v-on:click="exportTo">HTML <span class="glyphicon glyphicon-download-alt"/></a></li>
+                  <li><a id="exportToMarkdown" href="#" v-on:click="exportTo">Markdown <span class="glyphicon glyphicon-download-alt"/></a></li>
+                  <li><a id="exportToPdf" href="#" v-on:click="exportTo">PDF <span class="glyphicon glyphicon-download-alt"/></a></li>
+                  <li><a id="exportToHtml" href="#" v-on:click="exportTo">HTML <span class="glyphicon glyphicon-download-alt"/></a></li>
                 </ul>
               </li>
               <li class="dropdown">
@@ -148,7 +148,7 @@ export default {
   },
   //挂载时开启socket
   mounted:function () {
-    Vue.prototype.$socket = io("http://localhost:3000");
+    Vue.prototype.$socket = socket;
 
     this.$socket.on('chat',function (data) {
       var dataObject = JSON.parse(data);
@@ -265,16 +265,38 @@ export default {
     exportTo:function (event) {
       console.log("触发的是:"+event.target.id);
       //console.log("2"+this.getIMMine());
+      var filename = this.$store.state.editarticle.title;
+      var content = $("#textareaCode").text();
       switch (event.target.id)
       {
-        case 'convertToMarkdown':
+        case 'exportToMarkdown':
+          filename += ".md";
           break;
-        case 'convertToPdf':
+        case 'exportToPdf':
+          filename += ".pdf";
+          //convert to pdf
           break;
-        case 'convertToHtml':
+        case 'exportToHtml':
+          filename += ".html";
+          content = $("#articlePreviewArea").html();
           break;
         default:
       }
+      var blob = new Blob([content], {type: 'text/plain'});
+      //todo pdf要有变动
+      var url = window.URL.createObjectURL(blob);
+      var a = document.createElement('a');
+
+      a.style = "display: none";
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+
+      setTimeout(function () {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 5);
 
     },
     addContent:function (event) {

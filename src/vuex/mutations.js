@@ -12,6 +12,7 @@ const mutations = {
     state.mine = data.mine;
     state.friend = data.friend;
     state.group = data.group;
+    status.status = "online";
   },
 
   //从服务端获取的同ip文章

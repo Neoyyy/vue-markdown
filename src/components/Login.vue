@@ -75,6 +75,7 @@
 
     },
     submit: function () {
+
       var url = 'http://localhost:3000';
       var data = {
         email : this.formdata.email,
