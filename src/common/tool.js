@@ -49,22 +49,30 @@
 //
 
 function editArticleAuth() {
-  var content = '<div class="layui-form-item">\n';
-  content += '  <label class="layui-form-label">权限类型</label>\n';
-  content += '  <div class="layui-input-block">\n';
-  content += '  <input type="radio" name="sex" value="1" title="所有人仅可读" checked="">\n';
-  content += '  <input type="radio" name="sex" value="2" title="可读可修改">\n';
-  content += '  <input type="radio" name="sex" value="3" title="部分用户可读">\n';
-  content += '  <input type="radio" name="sex" value="4" title="部分用户可修改其他用户仅可读">\n';
-  content += '  <input type="radio" name="sex" value="5" title="特定用户不可修改">\n';
-  content += '  </div>\n  </div>\n';
-  content += '  <div class="layui-form-item layui-form-text">\n';
-  content += '  <label class="layui-form-label">目标用户ID</label>\n';
-  content += '  <div class="layui-input-block">\n';
-  content += '  <textarea placeholder="请输入用户ID以逗号分隔" class="layui-textarea"></textarea>\n';
-  content += '  </div>\n  </div>\n';
 
 
+  var content = '  <div style="padding-left: 25px;padding-right: 25px">\n<div class="layui-form-item" style="padding:10px 10px 10px 10px;">\n' +
+    '    <label >文章权限选择</label>\n' +
+    '    <div class="form-group">\n' +
+    '      <select id="permissionType" name="permissiontype" class="form-control">\n' +
+    '        <option value=""></option>\n' +
+    '        <option value="1">所有人仅可读</option>\n' +
+    '        <option value="2">可读可修改</option>\n' +
+    '        <option value="3">部分用户可读</option>\n' +
+    '        <option value="4">部分用户可修改</option>\n' +
+    '        <option value="5">部分用户不可修改</option>\n' +
+    '      </select>\n' +
+    '    </div>\n' +
+    '  </div>'
+
+  content += '  <div class="layui-form-item "style="padding:10px 10px 10px 10px;">\n';
+  content += '  <label >目标用户ID</label>\n';
+  content += '  <div >\n';
+  content += '  <textarea id="userList" placeholder="请输入用户ID以;分隔" ></textarea>\n';
+  content += '  </div>\n  </div>\n</div>\n';
+  var url = 'http://localhost:3000/article/saveArticle';
+
+console.log("article content:"+$("#textareaCode").val())
   layer.open({
     type: 1
     ,title: '编辑文章权限'
@@ -76,10 +84,19 @@ function editArticleAuth() {
     ,btn: ['确定', '取消']
     ,yes: function(){
       var postData = {
-
+        permissionType:$("#permissionType").val(),
+        authuserlist:$("#userList").text().split(";"),
+        content:$("#textareaCode").val(),
+        titile:"testArticle"
       };
-      $.post("url",postData,function (res) {
+      $.post(url,postData,function (res) {
+        if (res.code == 200){
+          layer.closeAll();
+          layer.msg("保存成功");
 
+        }else{
+          layer.msg(msg);
+        }
       })
     }
     ,btn2: function(){

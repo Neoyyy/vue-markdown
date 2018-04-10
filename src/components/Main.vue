@@ -90,7 +90,11 @@
               <li><a id="addCode" class="glyphicon glyphicon-console" v-on:click="addContent"></a></li>
               <li><a id="addLinks" class="glyphicon glyphicon-link" v-on:click="addContent"></a></li>
               <li><a id="searchArticle" class="glyphicon glyphicon-search" v-on:click="searchArticle"></a></li>
+<li>              <input id="articleTitle" type="text" style="width:200px;margin-top: 10px;"  class="form-control" placeholder="请输入文章标题" aria-describedby="basic-addon1">
+</li>
+
             </ul>
+
           </div>
 
 
@@ -242,7 +246,12 @@ export default {
       get(){
         return this.$store.state.group
       }
-    }
+    },
+//    title: {
+//      get() {
+//        return this.$store.state.editarticle.title
+//      }
+//      }
   },
   methods:{
     upload:function () {

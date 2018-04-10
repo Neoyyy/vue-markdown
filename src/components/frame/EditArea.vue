@@ -6,6 +6,7 @@
 
           <div class="row">
             <div class="col-xs-12 text-right">
+
               <button type="button" class="btn btn-success" v-on:click="previewArticle">
                 <span class="glyphicon glyphicon-send"></span> 预览</button>
             </div>
@@ -78,8 +79,13 @@
         });
       },
       saveArticle:function () {
-        if ("online" == this.$store.state.mine.status){
+        console.log("status:" + this.$store.state.mine.status)
+        if ($("#textareaCode").val().length > 0 && $("#articleTitle").val().length >0){
 
+
+        if ("online" == this.$store.state.mine.status){
+          layer.closeAll();
+          editArticleAuth();
 
         }else{
           this.$layer.open({
@@ -89,21 +95,27 @@
             ,shade: 0
             ,maxmin: true
             ,offset: 'auto'
-            ,content: '您未登录，是否以IP为记录进行保存？'
+            ,content: '&nbsp&nbsp&nbsp您未登录，是否以IP为记录进行保存？&nbsp&nbsp&nbsp'
             ,btn: ['保存为IP文件', '去登陆'] //只是为了演示
             ,yes: function(){
+              layer.closeAll();
+              editArticleAuth();
 
-              editArticleAuth()
             }
             ,btn2: function(){
+              layer.closeAll();
               $('#login').modal('show');
+
+
             }
 
             ,zIndex: this.$layer.zIndex //重点1
 
           });
         }
-
+        }else{
+          layer.msg("信息请填写完整")
+        }
 
       }
 
