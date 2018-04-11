@@ -2,6 +2,20 @@ import socket from "../socketim/messagesocket";
 
 const actions = {
 
+  getArticleById(store,postData){
+    console.log("要获取的id:"+postData.articleid);
+
+    $.post("http://localhost:3000/article/getArticleById",postData,function (res) {
+      if (res.code == '200'){
+        console.log(res.msg)
+        store.commit('setArticle',res.data);
+      }else{
+        layer.msg(res.msg);
+
+      }
+
+    })
+  },
   userLogin(store,postData){
     var vm = this;
     $.post(postData.url,postData.data,function (res) {
@@ -54,6 +68,20 @@ const actions = {
   saveArticle(store,postData){
 
     console.log("save article");
+  },
+  deleteArticle(store,postData){
+    console.log("action 删除文章 ")
+    $.post("http://localhost:3000/article/delete",postData,function (res) {
+
+      if (res.code == '200'){
+        console.log(res.msg)
+        store.commit('deleteArticleById',postData.articleid);
+      }else{
+        layer.msg(res.msg);
+
+      }
+    })
+
   },
   getRomoteFile(store,postData){
     console.log("action 获取远程文件")

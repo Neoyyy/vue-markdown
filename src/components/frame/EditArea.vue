@@ -75,7 +75,7 @@
           maxmin: true,
           shadeClose: true, //点击遮罩关闭层
           area : [width, height],
-          content: marked.convert($("#textareaCode").val())
+          content: '<div style="padding: 10px">'+marked.convert($("#textareaCode").val())+'</div>'
         });
       },
       saveArticle:function () {
@@ -95,7 +95,7 @@
             ,shade: 0
             ,maxmin: true
             ,offset: 'auto'
-            ,content: '&nbsp&nbsp&nbsp您未登录，是否以IP为记录进行保存？&nbsp&nbsp&nbsp'
+            ,content: '<div style="padding: 10px">' + '您未登录，是否以IP为记录进行保存？' + '</div>'
             ,btn: ['保存为IP文件', '去登陆'] //只是为了演示
             ,yes: function(){
               layer.closeAll();

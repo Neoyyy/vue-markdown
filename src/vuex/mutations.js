@@ -6,6 +6,34 @@ const mutations = {
     state.userarticle = null
 
   },
+  setArticle(state,data){
+//todo 测试
+    $("#textareaCode").val(data.content);
+    $('#articleTitle').val(data.title)
+    state.editarticle = data;
+    $('#userFile').modal('hide');
+
+  },
+  deleteArticleById(state,articleid){
+//删除本地article
+console.log("要删除的article:"+ articleid);
+    for(var i = 0;i < state.userarticle.length;i++){
+      console.log(state.userarticle[i].articleid)
+      if (state.userarticle[i].articleid == articleid){
+        console.log("yes")
+        state.userarticle.splice(i,1);
+      }
+    }
+    for(var i = 0;i < state.iparticle.length;i++){
+      console.log(state.iparticle[i].articleid)
+      if (state.iparticle[i].articleid == articleid){
+        console.log("yes")
+
+        state.iparticle.splice(i,1);
+      }
+    }
+
+  },
 
   //设置登录信息
   setLoginInfo(state,data){

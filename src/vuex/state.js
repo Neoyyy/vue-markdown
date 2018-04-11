@@ -2,7 +2,22 @@ const state = {
 
 
   userarticle:[],
-  iparticle:[],
+  iparticle:[{
+    articleid:'121212121',
+    title:'iparticleTest1',
+    owneremail:'172131041@email.com',
+    ownerip:'127.123.2.1',
+    content:'xixixixxi'
+
+  },
+    {
+      articleid:'e8916943-031c-40e0-a909-f26d75d870bd',
+      title:'iparticleTest2',
+      owneremail:'172131044@email.com',
+      ownerip:'128.34.45.1',
+      content:'hahaha'
+
+    }],
   editarticle:{
     articleid:'',
     title:'default',

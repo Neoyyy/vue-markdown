@@ -329,7 +329,7 @@ export default {
           break;
         default:
       }
-      $("#textareaCode").text($("#textareaCode").text() + content);
+      $("#textareaCode").val($("#textareaCode").val() + content);
       this.$refs.EditArea.convertToHtml();
     },
     searchArticle:function () {
