@@ -48,7 +48,7 @@
 //
 //
 
-function editArticleAuth() {
+function editArticleAuth(operaType) {
 
 
   var content = '  <div style="padding-left: 25px;padding-right: 25px">\n<div class="layui-form-item" style="padding:10px 10px 10px 10px;">\n' +
@@ -70,7 +70,20 @@ function editArticleAuth() {
   content += '  <div >\n';
   content += '  <textarea id="userList" placeholder="请输入用户ID以;分隔" ></textarea>\n';
   content += '  </div>\n  </div>\n</div>\n';
-  var url = 'http://localhost:3000/article/saveArticle';
+  var url;
+  var postData;
+  if(operaType == "save"){
+    url = 'http://localhost:3000/article/saveArticle';
+    postData = {
+      permissionType:$("#permissionType").val(),
+      authuserlist:$("#userList").text().split(";"),
+      content:$("#textareaCode").val(),
+      titile:$("#articleTitle").val()
+    };
+  }else{
+    url = '';
+  }
+
 
 console.log("article content:"+$("#textareaCode").val())
   layer.open({
@@ -83,12 +96,7 @@ console.log("article content:"+$("#textareaCode").val())
     ,content: content
     ,btn: ['确定', '取消']
     ,yes: function(){
-      var postData = {
-        permissionType:$("#permissionType").val(),
-        authuserlist:$("#userList").text().split(";"),
-        content:$("#textareaCode").val(),
-        titile:"testArticle"
-      };
+
       $.post(url,postData,function (res) {
         if (res.code == 200){
           layer.closeAll();

@@ -8,6 +8,7 @@ const mutations = {
   },
   setArticle(state,data){
 //todo 测试
+    console.log("set article")
     $("#textareaCode").val(data.content);
     $('#articleTitle').val(data.title)
     state.editarticle = data;

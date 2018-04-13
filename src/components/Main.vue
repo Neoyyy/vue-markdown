@@ -333,20 +333,29 @@ export default {
       this.$refs.EditArea.convertToHtml();
     },
     searchArticle:function () {
+      var  postData = {
+        mine:this.$store.state.mine
+      };
+      var thisObj = this;
       layer.prompt({
         formType: 0,
         //value: '初始值',
         title: '请输入文章代码',
         //area: ['800px', '350px'] //自定义文本域宽高
       }, function(value, index, elem){
-        $.get("http://localhost:3000/article/getsharearticle?articleId="+value,function(data){
-            this.handlerSearchArticle(data);
+        postData.articleid = value
+        $.post("http://localhost:3000/article/getsharearticle",postData,function(res){
+          layer.closeAll();
+          if (res.code == '200'){
+            thisObj.$store.commit('setArticle',res.data);
+          }else{
+            layer.msg(res.msg);
+
+          }
         });
       });
     },
-    handlerSearchArticle:function (data){
-      console.log(JSON.stringify(data))
-    }
+    
   }
 }
 
