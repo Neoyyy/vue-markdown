@@ -85,7 +85,7 @@
 
         if ("online" == this.$store.state.mine.status){
           layer.closeAll();
-          editArticleAuth();
+          editArticleAuth("save");
 
         }else{
           this.$layer.open({
@@ -99,7 +99,7 @@
             ,btn: ['保存为IP文件', '去登陆'] //只是为了演示
             ,yes: function(){
               layer.closeAll();
-              editArticleAuth();
+              editArticleAuth("save");
 
             }
             ,btn2: function(){

@@ -48,8 +48,8 @@
 //
 //
 
-function editArticleAuth(operaType) {
-
+function editArticleAuth(operaType,articleid,thiObj) {
+//operaType save 保存到云端  share 直接分享文章
 
   var content = '  <div style="padding-left: 25px;padding-right: 25px">\n<div class="layui-form-item" style="padding:10px 10px 10px 10px;">\n' +
     '    <label >文章权限选择</label>\n' +
@@ -61,6 +61,9 @@ function editArticleAuth(operaType) {
     '        <option value="3">部分用户可读</option>\n' +
     '        <option value="4">部分用户可修改</option>\n' +
     '        <option value="5">部分用户不可修改</option>\n' +
+    '        <option value="6">部分用户可读</option>\n' +
+    '        <option value="7">部分用户不可读</option>\n' +
+    '        <option value="8">仅自己可读</option>\n' +
     '      </select>\n' +
     '    </div>\n' +
     '  </div>'
@@ -68,7 +71,7 @@ function editArticleAuth(operaType) {
   content += '  <div class="layui-form-item "style="padding:10px 10px 10px 10px;">\n';
   content += '  <label >目标用户ID</label>\n';
   content += '  <div >\n';
-  content += '  <textarea id="userList" placeholder="请输入用户ID以;分隔" ></textarea>\n';
+  content += '  <textarea id="userList" class="form-control" placeholder="请输入用户ID以;分隔" ></textarea>\n';
   content += '  </div>\n  </div>\n</div>\n';
   var url;
   var postData;
@@ -81,11 +84,31 @@ function editArticleAuth(operaType) {
       titile:$("#articleTitle").val()
     };
   }else{
-    url = '';
+    url = 'http://localhost:3000/article/updateArticle';
+    for(var i = 0;i < thiObj.$store.state.userarticle.length;i++){
+      console.log(thiObj.$store.state.userarticle[i].articleid)
+      if (thiObj.$store.state.userarticle[i].articleid == articleid){
+        console.log("yes："+JSON.stringify(thiObj.$store.state.iparticle[i]))
+        postData = thiObj.$store.state.userarticle[i];
+        console.log("postData:" + postData)
+
+      }
+    }
+    for(var i = 0;i < thiObj.$store.state.iparticle.length;i++){
+      console.log(thiObj.$store.state.iparticle[i].articleid)
+      if (thiObj.$store.state.iparticle[i].articleid == articleid){
+        console.log("yes："+JSON.stringify(thiObj.$store.state.iparticle[i]))
+
+        postData = thiObj.$store.state.iparticle[i];
+        console.log("postData:" + postData)
+
+      }
+    }
+      postData.permissionType = $("#permissionType").val();
+      postData.authuserlist = $("#userList").text().split(";");
+
   }
 
-
-console.log("article content:"+$("#textareaCode").val())
   layer.open({
     type: 1
     ,title: '编辑文章权限'
@@ -100,7 +123,16 @@ console.log("article content:"+$("#textareaCode").val())
       $.post(url,postData,function (res) {
         if (res.code == 200){
           layer.closeAll();
-          layer.msg("保存成功");
+
+          if(operaType == "save"){
+            layer.msg("保存成功");
+          }else {
+            layer.open({
+              type: 1,
+              title: '文章代码',
+            content: '<div style="padding: 10px">' + postData.articleid + '</div>'
+            });
+          }
 
         }else{
           layer.msg(msg);

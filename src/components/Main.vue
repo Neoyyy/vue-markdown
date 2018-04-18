@@ -255,7 +255,6 @@ export default {
   },
   methods:{
     upload:function () {
-      console.log("1111")
       this.$layer.open({
         type: 1
         ,offset: 'auto'
@@ -272,7 +271,6 @@ export default {
     },
 
     exportTo:function (event) {
-      console.log("触发的是:"+event.target.id);
       //console.log("2"+this.getIMMine());
       var filename = this.$store.state.editarticle.title;
       var content = $("#textareaCode").text();
@@ -355,7 +353,7 @@ export default {
         });
       });
     },
-    
+
   }
 }
 
