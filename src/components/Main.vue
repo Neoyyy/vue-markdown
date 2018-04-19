@@ -141,7 +141,7 @@ import tipsMsg from '../../static/tips'
 import imui from '../socketim/imui'
 import messagesocket from '../socketim/messagesocket'
 import Vue from 'vue'
-
+import jsPDF from 'jspdf'
 export default {
   name: 'main',
   data () {
@@ -269,7 +269,24 @@ export default {
       });
 
     },
+    converToPdf(){
+      var text = $("#textareaCode").val();
+      var convettext = marked.convert(text);
+      $("#articlePreviewArea").html(convettext);
+      html2canvas($("#articlePreviewArea").get(0),{
+        onrendered:function (canvas) {
+          console.log("canvas")
+          console.log(canvas)
+          var pageData = canvas.toDataURL('image/jpeg', 1.0);
+          var pdf = new jsPDF('', 'pt', 'a4');
 
+          //addImage后两个参数控制添加图片的尺寸，此处将页面高度按照a4纸宽高比列进行压缩
+          pdf.addImage(pageData, 'JPEG', 0, 0, 595.28, 592.28/canvas.width * canvas.height );
+
+          pdf.save($("#articleTitle").val()+ '.pdf');
+        }
+      })
+    },
     exportTo:function (event) {
       //console.log("2"+this.getIMMine());
       var filename = this.$store.state.editarticle.title;
@@ -281,7 +298,7 @@ export default {
           break;
         case 'exportToPdf':
           filename += ".pdf";
-          //convert to pdf
+          this.converToPdf();
           break;
         case 'exportToHtml':
           filename += ".html";
@@ -289,21 +306,23 @@ export default {
           break;
         default:
       }
-      var blob = new Blob([content], {type: 'text/plain'});
-      //todo pdf要有变动
-      var url = window.URL.createObjectURL(blob);
-      var a = document.createElement('a');
+      if(event.target.id !== 'exportToPdf') {
+        var blob = new Blob([content], {type: 'text/plain'});
+        //todo pdf要有变动
+        var url = window.URL.createObjectURL(blob);
+        var a = document.createElement('a');
 
-      a.style = "display: none";
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
+        a.style = "display: none";
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
 
-      setTimeout(function () {
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-      }, 5);
+        setTimeout(function () {
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        }, 5);
+      }
 
     },
     addContent:function (event) {
