@@ -270,20 +270,66 @@ export default {
 
     },
     converToPdf(){
+      console.log("to pdf")
+
       var text = $("#textareaCode").val();
       var convettext = marked.convert(text);
       $("#articlePreviewArea").html(convettext);
-      html2canvas($("#articlePreviewArea").get(0),{
+      var content = $("#articlePreviewArea").html();
+      var height = 0.8 * $(document.body).height();
+      var width = 0.8 * $(document.body).width();
+
+      layer.open({
+        type: 1,
+        title: '您的文章',
+        maxmin: true,
+        shadeClose: true, //点击遮罩关闭层
+        area : [width, height],
+        content: '<div id="previewDialog" style="padding: 10px">'+marked.convert($("#textareaCode").val())+'</div>'
+      });
+      document.getElementById("previewDialog").style.background = "#FFFFFF";
+      document.getElementById("previewDialog").style.background = "#FFFFFF";
+
+      html2canvas($("#previewDialog").get(0),{
         onrendered:function (canvas) {
-          console.log("canvas")
-          console.log(canvas)
+          var contentWidth = canvas.width;
+          var contentHeight = canvas.height;
+          console.log("width:"+contentWidth)
+          console.log("height:"+height)
+          document.body.appendChild(canvas);
+
+          //一页pdf显示html页面生成的canvas高度;
+          var pageHeight = contentWidth / 592.28 * 841.89;
+          //未生成pdf的html页面高度
+          var leftHeight = contentHeight;
+          //页面偏移
+          var position = 0;
+          //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
+          var imgWidth = 595.28;
+          var imgHeight = 592.28/contentWidth * contentHeight;
+
           var pageData = canvas.toDataURL('image/jpeg', 1.0);
+
           var pdf = new jsPDF('', 'pt', 'a4');
 
-          //addImage后两个参数控制添加图片的尺寸，此处将页面高度按照a4纸宽高比列进行压缩
-          pdf.addImage(pageData, 'JPEG', 0, 0, 595.28, 592.28/canvas.width * canvas.height );
+          //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+          //当内容未超过pdf一页显示的范围，无需分页
+          if (leftHeight < pageHeight) {
+            pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+          } else {
+            while(leftHeight > 0) {
+              pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+              leftHeight -= pageHeight;
+              position -= 841.89;
+              //避免添加空白页
+              if(leftHeight > 0) {
+                pdf.addPage();
+              }
+            }
+          }
 
           pdf.save($("#articleTitle").val()+ '.pdf');
+          layer.closeAll()
         }
       })
     },
@@ -291,6 +337,7 @@ export default {
       //console.log("2"+this.getIMMine());
       var filename = this.$store.state.editarticle.title;
       var content = $("#textareaCode").text();
+      console.log("点击了:"+event.target.id)
       switch (event.target.id)
       {
         case 'exportToMarkdown':

@@ -10,10 +10,11 @@ import './assets/css/bootstrap.min.css'
 import './assets/js/bootstrap.min'
 import element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import VueSocketio from 'vue-socket.io'
 
 Vue.config.productionTip = false
 
-
+Vue.use(VueSocketio,'http://localhost:3000');
 //Vue.use(Vuex)
 Vue.use(element)
 //Vue.use(VueResource)
@@ -22,6 +23,14 @@ new Vue({
   el: '#app',
   store,
   router,
+  sockets:{
+    connect: function(){
+      console.log('socket 1connected')
+    },
+    customEmit: function(val){
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    }
+  },
   template: '<App/>',
   render: h => h(App),
   components: { App }
